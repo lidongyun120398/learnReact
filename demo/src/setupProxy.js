@@ -3,22 +3,13 @@
 
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.export = function (app) {
+module.exports = function (app) {
   app.use(
-    createProxyMiddleware("jian", {
-      target: "",
+    createProxyMiddleware("/api", {
+      target: "http://localhost:8080",
       changeOrigin: true,
       ws: true,
-      pathRewrite: { "^/jian": "" },
-    })
-  );
-
-  app.use(
-    createProxyMiddleware("zhi", {
-      target: "",
-      changeOrigin: true,
-      ws: true,
-      pathRewrite: { "^/zhi": "" },
+      pathRewrite: { "^/api": "" },
     })
   );
 };
