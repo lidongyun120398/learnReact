@@ -12,6 +12,19 @@ class Count extends React.Component{
   state = { num: 0 }
   render(){
     let { num } = this.state;
+    let flag = true
+    let isRun = true
+
+    let data = [{
+      id:1,
+      title:"rush A"
+    },{
+      id:2,
+      title:"rush B"
+    },{
+      id:3,
+      title:"rush C"
+    }]
     return <>
     {/* 每一个构建的视图，只能有一个根节点 所以React提供了一个特殊的标签：React.Fragment <></> 空文档标记标签 */}
     {/* 既保证了只有一个根节点，又不会新增一个HTML层级结构 */}
@@ -25,6 +38,46 @@ class Count extends React.Component{
     }}>
       增加
     </button>
+
+    {/* 基于flag来渲染元素的两种方式 */}
+    {/* 第一种控制元素的display来控制元素是否显示，但是元素仍会渲染 */}
+    <button style={{display:flag ? "block" : "none"}}>button1</button>
+
+    {/* 第二种可以在flag为false时直接不渲染该标签，可以直接控制元素渲染或者不渲染 */}
+    {!flag ? <button>button2</button> : null}
+
+    <button>{isRun ? "正在处理中..." : "立即提交注册"}</button>
+
+
+
+    {/* 数组循环展示 */}
+
+    <h2>去哪里</h2>
+    <ul className="news-box">
+      {data.map((item,index) => {
+        return <li key={item.id}>
+          <em>{ index + 1}</em>
+          &nbsp;&nbsp;
+          <span>{item.title}</span>
+        </li>
+      })}
+    </ul>
+    
+    <br />
+
+    {/* 拓展需求：没有数组单独循环 */}
+    {/* forEach和map不会迭代稀疏数组 */}
+
+    {new Array(5).fill(null).map((_,index) => {
+      return <button key={index}>
+        按钮{index + 1}
+        </button>
+    })}
+
+
+    {/* {}胡子语法中不能输入对象，但是可以通过React.createElement()来创建一个对象(虚拟DOM对象)放在里面 */}
+
+    {React.createElement("button",null,"提交")}
     </>
   }
 }
