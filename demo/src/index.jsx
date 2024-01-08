@@ -3,6 +3,7 @@
 
 import React from 'react';//react语法核心
 import ReactDOM from 'react-dom/client';//构建HTML(WebApp)核心
+import DemoOne from '@/views/DemoOne';
 
 //获取页面中#app的容器，作为“根”容器
 //在ReactDOM.createRoot()的时候，不能直接把HTML/BODY做为根容器，需要指定一个额外的盒子，例如#root
@@ -79,11 +80,19 @@ class Count extends React.Component{
 
     {React.createElement("button",null,"提交")}
     </>
-  }
+  } 
 }
+
+// console.log(React.createElement("button",null,"提交"))
 
 //计入render方法渲染我们编写的视图，把渲染后的内容，全部插入到#root中进行渲染
 root.render(
- <Count />
+  <>
+  <Count />
+  {/* 如果设置的属性值不是字符串格式，需要基于{}胡子语法嵌套 */}
+  {/* 在这里写的这些属性可以在DemonOne函数中通过props接收到 */}
+  {/* 使用双闭合标签时，还可以在标签中加一些其他的信息，通过children传递给DemonOne */}
+  <DemoOne title="我是标题" x={10} data={[10,20]} className="box" style={{fontSize:"20px"}} />
+  </>
 );
 
