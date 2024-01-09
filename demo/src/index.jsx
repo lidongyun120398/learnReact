@@ -92,7 +92,10 @@ root.render(
   {/* 如果设置的属性值不是字符串格式，需要基于{}胡子语法嵌套 */}
   {/* 在这里写的这些属性可以在DemonOne函数中通过props接收到 */}
   {/* 使用双闭合标签时，还可以在标签中加一些其他的信息，通过children传递给DemonOne */}
-  <DemoOne title="我是标题" x={10} data={[10,20]} className="box" style={{fontSize:"20px"}} />
+  <DemoOne title="我是标题" x={10} data={[10,20]} className="box" style={{fontSize:"20px"}}>
+    <span slot="footer">1111</span>
+    <span slot="header">2222</span>
+  </DemoOne>
   </>
 );
 
