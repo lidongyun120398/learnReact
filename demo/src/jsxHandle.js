@@ -33,6 +33,12 @@ export function createElement(ele, props, ...children) {
 }
 
 //render：把虚拟DOM变为真实DOM
+/* 
+  render函数在渲染的时候，如果type是：
+    字符串：创建一个标签
+    普通函数：执行函数，并将props传递给函数
+    构造函数：把构造函数基于new执行，也就是创建类的一个实例，也会把解析出来的props传递进去
+*/
 export function render(virtualDOM, container) {
   let { type, props } = virtualDOM;
   if (type === "string") {
