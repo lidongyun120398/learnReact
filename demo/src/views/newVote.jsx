@@ -47,11 +47,11 @@
     5.触发 componentDidMount：第一次渲染完毕
       +已经把virtualDOM转换为真实DOM元素了，所以可以获取真实DOM
   
-  组件更新逻辑(当修改了相关状态，组件会更新)
+  组件更新逻辑(第一种：组件内部的状态被修改，组件会更新)
       1.触发 shouldComponentUpdate 周期函数：是否允许更新
       2.触发 componentWillUpdate 周期函数: 更新之前
         + 此周期函数也是不安全的
-        + 在这个阶段状态也还没有修改
+        + 在这个阶段状态/属性也还没有修改
       3.修改状态值/属性值 (让this.state.xxx改为最新的值)
       4.触发 render 周期函数： 组件更新
         + 按照最新的状态/属性，把返回的JSX编译为virtualDOM
@@ -59,6 +59,16 @@
         + 把差异的部分进行渲染(渲染为真实DOM)
       5.触发 componentDidUpdate 周期函数: 组件更新完毕
       特殊说明： 如果我们是基于this.forceUpdate(),则会跳过shouldComponentUpdate的周期函数的校验，直接从componentWillUpdate开始更新，也就是视图一定会触发更新
+
+    (第二种：父组件更新了，触发子组件更新)
+      1.触发componentWillRecevieProps 周期函数: 接收最新属性之前
+      2.触发componentWillUpdate 周期函数
+      ...
+
+
+  组件卸载的逻辑:
+    1.触发componentWillUnmount 周期函数:组件销毁之前
+    2.销毁
 */
 
 import React,{ Component } from "react";
@@ -141,5 +151,13 @@ class Vote extends Component {
   componentDidUpdate(){
     console.log("componentDidUpdate:","组件更新完毕")
   }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    // this.props: 存储之前的属性
+    // nextProps: 传递进来的新属性
+    console.log(this.props,nextProps)
+  }
+
+  componentWillUnmount(){}
 }
 export default Vote

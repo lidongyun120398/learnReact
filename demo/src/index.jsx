@@ -5,7 +5,8 @@ import React from 'react';//react语法核心
 import ReactDOM from 'react-dom/client';//构建HTML(WebApp)核心
 // import DemoOne from '@/views/DemoOne';
 // import Dialog from "@/components/Dialog"
-import Vote from './views/newVote';
+// import Vote from './views/newVote';
+import Demo from "./views/Demo2"
 
 //获取页面中#app的容器，作为“根”容器
 //在ReactDOM.createRoot()的时候，不能直接把HTML/BODY做为根容器，需要指定一个额外的盒子，例如#root
@@ -112,8 +113,23 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //   </>
 // )
 
+/* 
+  父子组件渲染流程(深度优先原则)：遇到子组件，一定是把子组件处理完，父组件才能继续处理
+    + 父组件第一次渲染
+      父willMount -> 父render(子willMount -> 子render -> 子didMount) -> 父didMount
+    + 父组件更新
+      父shouldUpdate -> 父willUpdate -> 父render(子shouldUpdate -> 子willUpdate -> 子render -> 子didUpdate) -> 父didUpdate
+    + 父组件销毁
+      父willUnmount -> 处理中(子willUnmont -> 子销毁) -> 父销毁
+*/ 
+// root.render(
+//   <>
+//     <Vote title="React还是很好学的"/>
+//   </>
+// )
+
 root.render(
   <>
-    <Vote title="React还是很好学的"/>
+    <Demo />
   </>
 )
