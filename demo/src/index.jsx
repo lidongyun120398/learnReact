@@ -9,7 +9,8 @@ import ReactDOM from 'react-dom/client';//构建HTML(WebApp)核心
 // import Demo from "./views/Demo2"
 // import Demo from "./views/Demo3"
 // import Demo from "./views/Demo4"
-import Demo from "./views/Demo5"
+// import Demo from "./views/Demo5(this.setState细节)"
+import Demo from "./views/Demo6"
 
 //获取页面中#app的容器，作为“根”容器
 //在ReactDOM.createRoot()的时候，不能直接把HTML/BODY做为根容器，需要指定一个额外的盒子，例如#root

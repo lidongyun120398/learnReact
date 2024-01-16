@@ -1,4 +1,6 @@
 import React from "react"
+import { flushSync } from "react-dom"
+//flushSync:刷新updater更新队列，也就是让修改状态的任务立即批处理一次
 
 /*
   this.setState([partialState,callback])
@@ -40,24 +42,33 @@ class Demo extends React.Component{
     // this.setState({y:y+1})
     // console.log(this.state)
 
-    setTimeout(() => {
-      this.setState({x:x+1})
-      console.log(this.state)
-    },1000)
-    setTimeout(() => {
-      this.setState({y:y+1})
-      console.log(this.state)
-    },2000)
-    setTimeout(() => {
-      this.setState({z:z+1})
-      console.log(this.state)
-    },3000)
+    // setTimeout(() => {
+    //   this.setState({x:x+1})
+    //   console.log(this.state)
+    // },1000)
+    // setTimeout(() => {
+    //   this.setState({y:y+1})
+    //   console.log(this.state)
+    // },2000)
+    // setTimeout(() => {
+    //   this.setState({z:z+1})
+    //   console.log(this.state)
+    // },3000)
+
     // //同时修改三个状态值,只会触发一次视图更新
     // this.setState({
     //   x:x+1,
     //   y:y+1,
     //   z:z+1
     // })
+
+    //先修改xy，再修改z
+    flushSync(() => {
+      this.setState({x:x+1})
+      this.setState({y:y+1})
+    })
+    console.log(this.state)
+    this.setState({z: this.state.x + this.state.y})
   }
 
   render(){
