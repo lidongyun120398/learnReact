@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合成事件原理</title>
+  <style>
+    *{
+      margin:0;
+      padding:0
+    }
+
+    html,
+    body{
+      height:100%;
+      overflow: hidden;
+    }
+
+    .center{
+      position:absolute;
+      top: 50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+    }
+
+    #root{
+      width:300px;
+      height:300px;
+      background: lightblue;
+    }
+
+    #outer{
+      width:200px;
+      height:200px;
+      background: lightgreen;
+    }
+
+    #inner{
+      width:100px;
+      height:100px;
+      background: lightcoral;
+    }
+  </style>
+</head>
+<body>
+  <div id="root" class="center">
+    <div id="outer" class="center">
+      <div id="inner" class="center"></div>
+    </div>
+  </div>
+
+  <script>
+    /*
+      所谓合成事件绑定，其实并没有给元素本身做事件绑定，而是给元素设置onXXX/onXXXCapture这样的合成事件属性
+      当事件行为触发，根据原生的传播机制，都会传播到#root容器上，React内部给#root容器做了事件绑定
+      当React内部的方法执行的时候，会根据ev.composedPath()获取到的路径，一次把对应阶段的onXXX/onXXXCapture等事件合成属性触发执行
+
+      合成事件是利用事件委托(事件传播机制)完成的
+      
+    */
+
+
+    const root = document.querySelector("#root"),
+          outer = document.querySelector("#outer"),
+          inner = document.querySelector("#inner");
+    //经过视图渲染解析，outer/inner上都有onXXX/onXXXCapture这样的属性
+    outer.onClick = () => {console.log("outer 冒泡(合成)")}
+    outer.onClickCapture = () => {console.log("outer 捕获(合成)")}
+    inner.onClick = () => {console.log("inner 冒泡(合成)")}
+    inner.onClickCapture = () => {console.log("inner 捕获(合成)")}
+
+    //给root绑定事件
+    root.addEventListener('click',(ev) => {
+      let path = ev.composedPath();//path:(事件源到Window的传播路径)
+      [ ...path ].reverse().forEach(ele => {
+        let handle = ele.onClickCapture;
+        if(handle) handle();
+      })
+    }, true)
+
+    root.addEventListener('click',() => {
+      let path = ev.composedPath();//path:(事件源到Window的传播路径)
+      path.forEach(ele => {
+        let handle = ele.onClick;
+        if(handle) handle();
+      })
+    })
+
+  </script>
+</body>
+</html>
