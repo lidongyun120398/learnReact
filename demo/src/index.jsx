@@ -12,8 +12,14 @@ import ReactDOM from 'react-dom/client';//构建HTML(WebApp)核心
 // import Demo from "./views/Demo5(this.setState细节)"
 // import Demo from "./views/Demo6(setState函数参数)"
 // import Demo from "./views/Demo7(合成事件语法)"
-import Demo from "./views/Demo8(合成事件原理1)"
-import './index.less'
+// import Demo from "./views/Demo8(合成事件原理1)"
+// import './index.less'
+// import Demo from "./views/Demo9(通过touch事件模拟移动端点击事件)"
+// import Demo from "./views/Demo10(FastClick解决移动端点击问题)"
+// //引入FastClick来解决移动端的点击问题
+// import FastClick from 'fastclick'
+// FastClick.attach(document.body)
+import Demo from "./views/Demo11(循环事件绑定)"
 
 //获取页面中#app的容器，作为“根”容器
 //在ReactDOM.createRoot()的时候，不能直接把HTML/BODY做为根容器，需要指定一个额外的盒子，例如#root
