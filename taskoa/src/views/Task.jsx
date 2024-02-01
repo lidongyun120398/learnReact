@@ -1,6 +1,6 @@
 import React  from 'react';
 import './Task.less';
-import { Button, Popconfirm, Table, Tag } from 'antd';
+import { Button, Popconfirm, Table, Tag, Modal, Form, Input, DatePicker, message } from 'antd';
 
 //对日期处理的方法
 const zero = function zero(text){
@@ -63,19 +63,53 @@ class Task extends React.Component{
     }
   }]
 
+  // state = {
+  //   tableData:[],
+  //   tableLoading:false,
+  //   modalVisible:false,
+  //   confirmLoading:false,
+  //   ruleForm:{
+  //     task:'',
+  //     time:''
+  //   }
+  // }
+
   state = {
     tableData:[],
-    tableLoading:false
-    
+    tableLoading:false,
+    modalVisible:false,
+    confirmLoading:false,
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalVisible:false,
+      confirmLoading:false
+    })
+    this.formIns.resetFields()
+  }
+  submit =async () => {
+    try{
+      await this.formIns.validateFields()
+      let data = this.formIns.getFieldsValue()
+      message.success("表单校验通过")
+      this.setState({
+        modalVisible:false
+      })
+    }catch(_){}
   }
   
   render(){
-    let { tableData, tableLoading } = this.state
+    let { tableData, tableLoading, modalVisible, confirmLoading } = this.state
     return <div className="task-box">
       {/*头部 */}
       <div className="header">
         <h2 className="title">TASK OA任务管理系统</h2>
-        <Button type="primary">新增任务</Button>
+        <Button type="primary" onClick={() => {
+          this.setState({
+            modalVisible:true
+          })
+        }}>新增任务</Button>
       </div>
 
       {/*标签 */}
@@ -89,7 +123,56 @@ class Task extends React.Component{
       <Table dataSource={tableData} columns={this.columns} loading={tableLoading} pagination={false} rowKey="id"/>
       
       {/*对话框 && 表单 */}
-      
+      <Modal title="新增任务窗口" 
+            open={modalVisible} 
+            confirmLoading={confirmLoading} 
+            getContainer={false} 
+            keyboard={false} 
+            maskClosable={false}
+            okText="确认提交"
+            onCancel={this.closeModal}
+            onOk={this.submit}>
+          <Form ref={x => this.formIns = x} layout="vertical" initialValues={{ task: "", time: ""}}>
+            {/* <Form.Item>
+              <Input.TextArea rows={4} value={this.state.ruleForm.task} onChange={(ev) => {
+                let target = ev.target,
+                    text = target.value.trim();
+                this.setState({
+                  ruleForm:{
+                    ...this.state.ruleForm,
+                    task:text
+                  }
+                })
+              }}></Input.TextArea>
+            </Form.Item> */}
+
+            <Form.Item label="任务描述" name="task" validateTrigger='onBlur' 
+                      rules={[
+                        { required: true,message: '任务描述是必填项'},
+                        { min: 6, message:'输入的内容至少6位及以上'}
+                      ]}>
+              <Input.TextArea rows={4}></Input.TextArea>
+            </Form.Item>
+
+            {/* <Form.Item>
+              <DatePicker showTime value={this.state.ruleForm.time} onChange={value => {
+                //value：获取当前选中的日期(dayjs对象)
+                this.setState({
+                  ruleForm:{
+                    ...this.state.ruleForm,
+                    time:value
+                    // time:value.format("YYYY-MM-DD HH:mm:ss")
+                  }
+                })
+              }}/>
+            </Form.Item> */}
+
+            <Form.Item label="任务完成事件" name="time" validateTrigger='onBlur'  
+                      rules={[{ required: true, message: "任务完成事件是必填项"}]}>
+              <DatePicker showTime/>
+            </Form.Item>
+          </Form>
+      </Modal>
       
     </div>
   }
