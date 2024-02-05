@@ -1,6 +1,7 @@
 import React  from 'react';
 import './Task.less';
 import { Button, Popconfirm, Table, Tag, Modal, Form, Input, DatePicker, message } from 'antd';
+import { getTaskList, addTask, removeTask, completeTask } from "@/api/index"
 
 //对日期处理的方法
 const zero = function zero(text){
