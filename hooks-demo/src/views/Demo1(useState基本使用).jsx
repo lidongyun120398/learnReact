@@ -23,7 +23,7 @@ const Demo1 = function Demo1(){
 
   return <div className='demo'>
     <span className="num">{ num }</span>
-    <Button type='primary' size='small' click={handle}></Button>
+    <Button type='primary' size='small' onClick={handle}></Button>
   </div>
 }
 

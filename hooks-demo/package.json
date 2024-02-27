@@ -78,7 +78,7 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "git node scripts/start.js",
+    "start": "cross-env PORT=8080 node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
