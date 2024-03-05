@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import Demo from './views/Demo3(useState执行时机)';
-import Demo from './views/Demo5';
+import Demo from './views/Demo5(useState函数参数)';
 import Vote from './views/Vote'
 
 import { ConfigProvider } from 'antd';
