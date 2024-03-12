@@ -1,19 +1,16 @@
-import React from "react";
+import React, { memo } from "react";
 import { Button } from 'antd';
-import PropTypes  from "prop-types";
+import PropTypes from 'prop-types'
 
-class VoteFooter extends React.PureComponent {
-    static propTypes = {
-        change: PropTypes.func.isRequired
-    }
-     
-    render() {
-        let { change } = this.props
-        return <div className="footer">
-            <Button type="primary" onClick={change.bind(null,'sup')}>支持</Button>
-            <Button type="primary" danger  onClick={change.bind(null,'opp')}>反对</Button>
-        </div>;
-    }
+const VoteFooter = function VoteFooter(props) {
+    let {change} = props
+    return <div className="footer">
+        <Button type="primary" onClick={change.bind(null,'sup')}>支持</Button>
+        <Button type="primary" danger onClick={change.bind(null,'opp')}>反对</Button>
+    </div>;
+};
+
+VoteFooter.propTypes = {
+    change:PropTypes.func.isRequired
 }
-
-export default VoteFooter;
+export default memo(VoteFooter);
