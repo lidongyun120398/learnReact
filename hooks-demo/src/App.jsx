@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from './views/Nav'
 import Menu from './views/Menu'
+import Demo from './views/Demo'
 
 /* 
   解决样式冲突，实现样式私有化的五种方案:
@@ -87,8 +88,9 @@ import Menu from './views/Menu'
 
 const App = function App(){
   return <div className="home-box">
-    <Nav />
-    <Menu />
+    {/* <Nav />
+    <Menu /> */}
+    <Demo  x={10} y={20} enable={true}/>
     <div className="box"></div>
   </div>
 }
