@@ -28,6 +28,61 @@ import Menu from './views/Menu'
         composes:list
       }
       这样写会继承list类里面所有的样式
+  @4 ReactJSS
+      基于createUseStyles方法，构建组件需要的样式;返回结果是一个自定义Hook函数
+        + 对象中的每个成员就是创建的样式类名
+        + 可以类似于less等预编译语言中的"嵌套语法",给其后代或者伪类等设置样式
+      自定义Hook执行，返回一个对象，对象中包括:
+        + 我们创建的样式类名，作为属性名
+        + 编译后的样式类名(唯一的)，作为属性值
+      而我们在js中编写的样式，最终会编译为以编译后的样式类名为键，样式对象为值的html代码
+      import { createUseStyles } from 'react-jss'
+
+      const useStyles = createUseStyles({
+        //box是类名
+        box:{
+          backgrounColor:'lightblue'
+          '&:hover':{
+            color:green
+          }
+          '& a':{// list a{}
+
+          }
+        }
+      })
+
+      在函数组件中：
+      let { box } = useStyles()
+      拿到box类，给对应的HTML元素加上className={box}
+
+      相对于CSSModules的好处:因为样式是写在JS中的，我们就可以基于一些逻辑操作，实现样式的动态管理
+      let { box } = useStyles({
+        size:14,
+        color:green
+      })
+
+      const useStyles = createUseStyles({
+        //box是类名
+        box:{
+          backgrounColor:'lightblue'
+          '&:hover':{
+            color:props = props.color
+          }
+          list:props => {//这个函数只能给list加，不能给内部的'& a'加
+            return {
+              '& a':{
+                fontSize:props.size + 'px',
+                color:'#000'
+              }
+            }
+          }
+        }
+      })
+
+
+
+      ReactJSS不能直接作用于Component组件中，但是可以创建一个包装器(代理组件：函数组件)，获取我们基于ReactJSS编写的样式，把获取的样式基于属性传递给类组件
+      代码见Menu.jsx
 */
 
 const App = function App(){
