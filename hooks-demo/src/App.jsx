@@ -67,7 +67,7 @@ import Demo from './views/Demo'
         box:{
           backgrounColor:'lightblue'
           '&:hover':{
-            color:props = props.color
+            color:props => props.color
           }
           list:props => {//这个函数只能给list加，不能给内部的'& a'加
             return {
@@ -84,6 +84,9 @@ import Demo from './views/Demo'
 
       ReactJSS不能直接作用于Component组件中，但是可以创建一个包装器(代理组件：函数组件)，获取我们基于ReactJSS编写的样式，把获取的样式基于属性传递给类组件
       代码见Menu.jsx
+
+  @5 styled-components
+      代码见NavStyle.js和Nav.jsx
 */
 
 const App = function App(){
