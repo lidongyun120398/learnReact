@@ -6,6 +6,22 @@ import Vote from './views/Vote'
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN'
 
+import store from './store'
+import ThemeContext from './ThemeContext';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <ConfigProvider locale={zhCN}>
+    <ThemeContext.Provider 
+      value={{
+        store
+      }}
+    >
+      <Vote/>
+    </ThemeContext.Provider>
+  </ConfigProvider>
+);
+
 /* 
   @1 创建全局公共的容器用来存储各组件需要的公共信息
     const store = createStore([reducer])
@@ -45,13 +61,12 @@ import zhCN from 'antd/locale/zh_CN'
   修改公共容器中的状态不能直接修改
     + 基于dispatch派发，通知reducer执行
     + 在reducer中去实现状态的更新
+
+  @6 为了在各个组件中，都可以把创建的store获取到，我们可以基于上下文的方案
+    + 在index.jsx中，基于ThemeContext.Provider把创建的store放在上下文中
+    + 因为所有组件最后都是在index.jsx中渲染，所有组件都可以理解为index.jsx的后代组件，基于上下文方案，获取在上下文中存储的store就可以了
 */
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <ConfigProvider locale={zhCN}>
-    <Vote/>
-  </ConfigProvider>
-);
+
 

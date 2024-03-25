@@ -1,14 +1,32 @@
 import React,{ useMemo } from "react";
-import PropTypes from 'prop-types'
+import ThemeContext from "../ThemeContext";
 
-const VoteMain = function VoteMain(props) {
-    
+class VoteMain extends React.Component{
+    static contextType = ThemeContext;
 
-    return <div className="main">
-        <p>支持人数:0人</p>
-        <p>反对人数:0人</p>
-    </div>;
-};
+    render(){
+        const { store } = this.context;
+        let { supNum, oppNum } = store.getState()
+        return <div className="main">
+            <p>支持人数:{supNum}人</p>
+            <p>反对人数:{oppNum}人</p>
+        </div>;
+    }
+
+    componentDidMount(){
+        const { store } = this.context;
+        store.subscribe(() => {
+            this.forceUpdate()
+        })
+    }
+}
+
+// const VoteMain = function VoteMain(props) {
+//     return <div className="main">
+//         <p>支持人数:0人</p>
+//         <p>反对人数:0人</p>
+//     </div>;
+// };
 
 
 export default VoteMain;
