@@ -7,7 +7,8 @@ import ThemeContext from "../ThemeContext";
 const Vote = function Vote() {
     const { store } = useContext(ThemeContext) 
     //获取容器中的公共状态
-    let { supNum, oppNum } = store.getState() 
+    // let { supNum, oppNum } = store.getState()
+    let { supNum, oppNum } = store.getState().vote 
     
     // //组件第一次渲染完毕后，把让组件更新的方法，放在STORE的事件池中
     // let [ num, setNum ] = useState(0)
