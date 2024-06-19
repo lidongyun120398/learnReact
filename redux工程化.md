@@ -1,4 +1,4 @@
-1. 按照模块，把reducer进行单独管理每个模块都有自己的reducer，最后把所有的reducer进行合并，合并为一个，赋值给我们创建的store
+#### 1. 按照模块，把reducer进行单独管理每个模块都有自己的reducer，最后把所有的reducer进行合并，合并为一个，赋值给我们创建的store
 ```js
   import { combineReducers } from "redux";
   import voteReducer from "./voteReducer";
@@ -12,7 +12,7 @@
 ```
 + 派发的操作不需要改动，每一次派发后，都会去所有reducer中进行匹配，用派发的行为标识和每个模块reducer中判断的行为标识进行比较。和谁匹配成功就执行谁的逻辑
 
-2. 每一次dispatch派发的时候都会去每个模块的reducer中找一遍，把所有和派发行为标识匹配的逻辑执行
+#### 2. 每一次dispatch派发的时候都会去每个模块的reducer中找一遍，把所有和派发行为标识匹配的逻辑执行
 + 可能存在的问题: 团队协作开发的时候，因为开发的人多，最后很有可能派发的行为标识会有冲突
 + 所以我们一定要保证，不管那个模块，哪个组件，我们派发的行为标识，必须是唯一的
 + 基于"宏管理"(统一管理)，让所有行为标识，具有统一性
@@ -35,7 +35,7 @@ store.dispatch({
 })
 ```
 
-3. 把派发的行为对象，按模块来进行统一管理
+#### 3. 把派发的行为对象，按模块来进行统一管理
 + 在store中创建actions来管理派发行为对象
   ```js
   import * as TYPES from "@/store/actions-types";
@@ -69,3 +69,5 @@ store.dispatch({
   store.dispatch(action.vote.support())
   ```
 此操作的意义，我们称之为创建actionCreator，在接下来处理react-redux的时候，会非常有用
+
+#### combineReducers源码
