@@ -1,26 +1,32 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from 'antd';
-import ThemeContext from "../ThemeContext";
 import action from '@/store/action'
+import { connect } from 'react-redux';
 
 
-const VoteFooter = function VoteFooter() {
-    const { store } = useContext(ThemeContext)
+const VoteFooter = function VoteFooter(props) {
+    let { support, oppose } = props;
     return <div className="footer">
-        <Button type="primary" onClick={() => {
-            // store.dispatch({
-            //     type:TYPES.VOTE_SUP
-            // })
-            store.dispatch(action.vote.support())
-        }}>支持</Button>
-        <Button type="primary" danger onClick={() => {
-            // store.dispatch({
-            //     type:TYPES.VOTE_OPP
-            // })
-            store.dispatch(action.vote.oppose())
-        }}>反对</Button>
+        <Button type="primary" onClick={support}>支持</Button>
+        <Button type="primary" danger onClick={oppose}>反对</Button>
     </div>;
 };
 
 
-export default VoteFooter;
+export default connect(
+    null,
+    action.vote
+    // dispatch => {
+    //     return {
+    //         //返回相关的方法，作为属性传递给组件
+    //         //组件内部执行方法的时候，基于dispatch完成任务的派发，派发夫人行为对象，基于action中封装的操作获取
+    //         support: () => {
+    //             dispatch(action.vote.support())
+    //         },
+    //         oppose: () => {
+    //             dispatch(action.vote.oppose()) 
+    //         }
+
+    //     }
+    // }
+)(VoteFooter);

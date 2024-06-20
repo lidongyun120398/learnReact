@@ -1,37 +1,11 @@
-import React,{ useContext, useState, useEffect } from "react";
+import React from "react";
 import './Vote.less';
 import VoteMain from './VoteMain';
 import VoteFooter from './VoteFooter';
-import ThemeContext from "../ThemeContext";
+import { connect } from 'react-redux'
 
-const Vote = function Vote() {
-    const { store } = useContext(ThemeContext) 
-    //获取容器中的公共状态
-    // let { supNum, oppNum } = store.getState()
-    let { supNum, oppNum } = store.getState().vote 
-    
-    // //组件第一次渲染完毕后，把让组件更新的方法，放在STORE的事件池中
-    // let [ num, setNum ] = useState(0)
-    // const update = () => {
-    //     setNum(num+1)
-    // } 
-    // useEffect(() => {
-    //     // let unsubscribe = store.subscribe(让组件更新的方法)
-    //     // + 把让组件更新的方法放在STORE的事件池中
-    //     // + 返回的unsubscribe方法执行，可以把刚才放入事件池中的方法移除掉
-    //     let unsubscribe = store.subscriber(update)
-    //     return () => {
-    //         unsubscribe();
-    //     }
-    // },[num])
-
-    let [_,setNum] = useState()
-
-    useEffect(() => {
-        console.log(store)
-        store.subscribe(() => setNum({}))
-    },[])
-
+const Vote = function Vote(props) {
+    let {supNum, oppNum} = props
     return <div className="vote-box">
         <div className="header">
             <h2 className="title">React是很棒的前端框架</h2>
@@ -42,4 +16,26 @@ const Vote = function Vote() {
     </div>;
 };
 
-export default Vote;
+export default connect(state => state.vote)(Vote);
+
+/* 
+connect(mapStateToProps, mapDispatchToProps)(要渲染的组件)
+    1.mapStateToProps: 可以获取到redux中的公共状态，把需要的信息作为属性，传递组件即可
+    connect(state => {
+        //state:存储redux容器中，所有模块的公共状态信息
+        //返回对象中的信息，就是要作为属性传递给组件的信息
+        return{
+            supNum：state.vote.supNum
+    })
+    2.mapDispatchToProps: 把redux容器中的dispatch方法，传递给组件，组件就可以调用dispatch方法，触发redux容器中的reducer方法
+    connect(
+        null,
+        dispatch => {
+            //dispatch:store.dispatch派发任务的方法
+
+            //返回对象中的信息，会作为属性传递给组件
+            return{
+            }
+    })
+})(Vote)
+*/
