@@ -19,7 +19,7 @@ export default connect(
     // dispatch => {
     //     return {
     //         //返回相关的方法，作为属性传递给组件
-    //         //组件内部执行方法的时候，基于dispatch完成任务的派发，派发夫人行为对象，基于action中封装的操作获取
+    //         //组件内部执行方法的时候，基于dispatch完成任务的派发，派发行为对象，基于action中封装的操作获取
     //         support: () => {
     //             dispatch(action.vote.support())
     //         },
