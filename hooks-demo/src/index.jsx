@@ -9,6 +9,8 @@ import zhCN from 'antd/locale/zh_CN'
 import store from './store'
 import { Provider } from 'react-redux'
 
+import './fetchDemo'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ConfigProvider locale={zhCN}>
